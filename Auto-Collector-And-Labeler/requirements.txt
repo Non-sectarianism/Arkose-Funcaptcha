@@ -1,0 +1,6 @@
+camoufox[geoip]
+browserforge
+pillow
+# labeler: dino (optional but default). CPU wheels are fine.
+torch
+torchvision
