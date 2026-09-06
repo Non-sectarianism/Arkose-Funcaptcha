@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grid Challenge Labeler</title>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#161a21; --panel2:#1c222b; --line:#252d3a;
+    --fg:#e8ecf1; --dim:#8b95a5; --dim2:#5f6978;
+    --accent:#5b9dff; --good:#3ddc84; --warn:#ffb020; --bad:#ff6b6b;
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font:14px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  button,input,select{font:inherit;color:inherit}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:20; background:rgba(22,26,33,.92);
+    backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+    padding:10px 18px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .brand{display:flex;align-items:center;gap:9px;font-weight:650;letter-spacing:-.01em}
+  .brand svg{width:18px;height:18px;color:var(--accent)}
+  .spacer{margin-left:auto}
+
+  .stat{display:flex;align-items:baseline;gap:5px;color:var(--dim);font-size:12.5px}
+  .stat b{color:var(--fg);font-size:14px;font-variant-numeric:tabular-nums}
+  .stat.good b{color:var(--good)} .stat.warn b{color:var(--warn)}
+  .sep{width:1px;height:20px;background:var(--line)}
+
+  button{
+    background:var(--panel2); border:1px solid var(--line); border-radius:8px;
+    padding:7px 12px; cursor:pointer; transition:.12s; white-space:nowrap;
+  }
+  button:hover:not(:disabled){background:#232b36;border-color:#313c4c}
+  button:disabled{opacity:.4;cursor:not-allowed}
+  .btn-accent{background:var(--accent);border-color:var(--accent);color:#06101f;font-weight:600}
+  .btn-accent:hover:not(:disabled){background:#74adff;border-color:#74adff}
+  .btn-good{background:var(--good);border-color:var(--good);color:#052012;font-weight:600}
+  .btn-good:hover:not(:disabled){background:#5ee89b;border-color:#5ee89b}
+  .btn-ghost{background:transparent}
+
+  .field{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--dim)}
+  .field input{
+    background:var(--bg); border:1px solid var(--line); border-radius:7px;
+    padding:6px 9px; width:190px; outline:none;
+  }
+  .field input:focus{border-color:var(--accent)}
+  .field input.num{width:58px;text-align:center}
+
+  /* ---------- progress ---------- */
+  #bar{height:2px;background:var(--line);position:sticky;top:53px;z-index:19}
+  #bar>div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--good));transition:width .2s}
+
+  /* ---------- layout ---------- */
+  main{max-width:1280px;margin:0 auto;padding:20px 18px 60px}
+
+  /* ---------- start screen ---------- */
+  .hero{max-width:760px;margin:36px auto;text-align:center}
+  .hero h1{font-size:26px;margin:0 0 10px;letter-spacing:-.02em}
+  .hero p{color:var(--dim);margin:0 auto 22px;max-width:560px}
+  #drop{
+    border:1.5px dashed var(--line); border-radius:14px; padding:44px 28px;
+    background:var(--panel); transition:.15s; cursor:pointer;
+  }
+  #drop.hot{border-color:var(--accent);background:#18202c}
+  #drop .big{font-size:15px;font-weight:600;margin-bottom:6px}
+  #drop .sub{color:var(--dim);font-size:13px}
+
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:26px;text-align:left}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+  .step .n{
+    width:20px;height:20px;border-radius:50%;background:var(--accent);color:#06101f;
+    display:grid;place-items:center;font-size:11px;font-weight:700;margin-bottom:8px
+  }
+  .step h3{margin:0 0 4px;font-size:13.5px}
+  .step p{margin:0;color:var(--dim);font-size:12.5px;line-height:1.5}
+
+  .note{
+    margin-top:22px;background:#1b1a12;border:1px solid #3a3418;border-radius:var(--radius);
+    padding:12px 14px;color:#e4d9b4;font-size:12.5px;text-align:left;display:flex;gap:9px
+  }
+  .note b{color:var(--warn)}
+
+  /* ---------- layout diagram ---------- */
+  .diagram{margin:0 auto;display:block;max-width:420px;width:100%}
+
+  /* ---------- viewer ---------- */
+  #stage{position:relative;line-height:0;background:#000;border:1px solid var(--line);
+         border-radius:var(--radius);overflow:hidden}
+  #img{width:100%;display:block}
+  #overlay{position:absolute;inset:0}
+  .col{position:absolute;top:0;cursor:pointer;transition:background .1s;
+       border-right:1px solid rgba(255,255,255,.10)}
+  .col:last-child{border-right:none}
+  .col:hover{background:rgba(91,157,255,.20);box-shadow:inset 0 0 0 2px var(--accent)}
+  .col .num{
+    position:absolute;top:6px;left:50%;transform:translateX(-50%);
+    font:700 12px ui-monospace,monospace;color:#fff;background:rgba(0,0,0,.55);
+    border-radius:5px;padding:2px 7px;pointer-events:none;letter-spacing:.02em
+  }
+  .col.picked{background:rgba(61,220,132,.28);box-shadow:inset 0 0 0 2px var(--good)}
+  .col.picked .num{background:var(--good);color:#052012}
+  #refbox{position:absolute;border:1.5px dashed var(--accent);border-radius:6px;
+          pointer-events:none;display:none}
+  #refbox span{position:absolute;left:4px;bottom:100%;font-size:10.5px;color:var(--accent);
+               background:rgba(15,17,21,.85);padding:1px 5px;border-radius:4px;white-space:nowrap}
+
+  #toolbar{display:flex;align-items:center;gap:9px;margin-top:14px;flex-wrap:wrap}
+  .chip{background:var(--panel);border:1px solid var(--line);border-radius:20px;
+        padding:4px 11px;font-size:12.5px;color:var(--dim)}
+  .chip.on{color:var(--good);border-color:#28503a;background:#132218}
+  #fname{color:var(--dim2);font-size:12px;font-family:ui-monospace,monospace;
+         margin-left:auto;overflow:hidden;text-overflow:ellipsis;max-width:280px;white-space:nowrap}
+
+  kbd{background:var(--panel2);border:1px solid var(--line);border-bottom-width:2px;
+      border-radius:5px;padding:1px 6px;font:600 11px ui-monospace,monospace;color:var(--dim)}
+  #help{margin-top:12px;color:var(--dim2);font-size:12.5px;display:flex;gap:16px;flex-wrap:wrap}
+
+  .toggle{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--dim);cursor:pointer;user-select:none}
+  .toggle input{appearance:none;width:32px;height:18px;border-radius:20px;background:var(--line);
+                position:relative;cursor:pointer;transition:.15s;outline:none}
+  .toggle input:checked{background:var(--good)}
+  .toggle input::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;
+                       border-radius:50%;background:#fff;transition:.15s}
+  .toggle input:checked::after{left:16px}
+
+  #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);
+         background:var(--panel2);border:1px solid var(--line);border-radius:9px;
+         padding:9px 16px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:50}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+      <rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5l2.5 2.5 4.5-5"/>
+    </svg>
+    Grid Challenge Labeler
+  </div>
+
+  <div class="sep"></div>
+  <label class="field">variant
+    <input id="variant" type="text" placeholder="e.g. my_variant_v1" spellcheck="false">
+  </label>
+  <label class="field">tiles
+    <input id="ncand" class="num" type="number" min="2" max="16" value="8">
+  </label>
+
+  <div class="spacer"></div>
+
+  <div class="stat good">labeled <b id="nlab">0</b></div>
+  <div class="stat warn">skipped <b id="nskip">0</b></div>
+  <div class="stat"><b id="cur">0</b>/<b id="tot">0</b></div>
+  <div class="sep"></div>
+  <button id="reset" class="btn-ghost" title="Clear saved progress">Reset</button>
+  <button id="export" class="btn-good" disabled>Download labels</button>
+</header>
+<div id="bar"><div></div></div>
+
+<main>
+  <!-- ============ start screen ============ -->
+  <section id="start">
+    <div class="hero">
+      <h1>Label image-grid challenges, fast</h1>
+      <p>A single-file, offline labeling tool. Pick the tile that matches the reference,
+         and export a ready-to-train <code>.jsonl</code>. Nothing is uploaded — everything
+         stays in your browser.</p>
+
+      <svg class="diagram" viewBox="0 0 400 150" fill="none">
+        <g stroke="#252d3a" stroke-width="1.5">
+          <rect x="8" y="8" width="46" height="46" rx="3" fill="#1c222b"/>
+          <rect x="58" y="8" width="46" height="46" rx="3" fill="#1c222b"/>
+          <rect x="108" y="8" width="46" height="46" rx="3" fill="#132218" stroke="#3ddc84"/>
+          <rect x="158" y="8" width="46" height="46" rx="3" fill="#1c222b"/>
+          <rect x="208" y="8" width="46" height="46" rx="3" fill="#1c222b"/>
+          <rect x="258" y="8" width="46" height="46" rx="3" fill="#1c222b"/>
+          <rect x="308" y="8" width="46" height="46" rx="3" fill="#1c222b"/>
+          <rect x="8" y="62" width="70" height="70" rx="3" fill="#18202c" stroke="#5b9dff" stroke-dasharray="4 3"/>
+        </g>
+        <text x="131" y="36" fill="#3ddc84" font-size="11" font-weight="700" text-anchor="middle" font-family="monospace">2</text>
+        <text x="43" y="102" fill="#5b9dff" font-size="10" text-anchor="middle" font-family="sans-serif">reference</text>
+        <text x="200" y="76" fill="#8b95a5" font-size="10" text-anchor="middle" font-family="sans-serif">candidates 0 … n-1, left to right</text>
+      </svg>
+
+      <div id="drop">
+        <div class="big">Drop a folder of images here</div>
+        <div class="sub">or click to choose &nbsp;·&nbsp; PNG / JPG &nbsp;·&nbsp; nothing leaves your machine</div>
+        <input id="pickdir" type="file" webkitdirectory directory multiple accept="image/*" hidden>
+        <input id="pickfiles" type="file" multiple accept="image/*" hidden>
+      </div>
+      <div style="margin-top:10px">
+        <button id="btnDir" class="btn-accent">Choose folder</button>
+        <button id="btnFiles">Choose files</button>
+      </div>
+
+      <div class="steps">
+        <div class="step"><div class="n">1</div><h3>Name the variant</h3>
+          <p>Type the challenge type in the header. It is written into every exported row.</p></div>
+        <div class="step"><div class="n">2</div><h3>Load one variant</h3>
+          <p>Load images of a <b>single</b> challenge type per session, so one label set stays consistent.</p></div>
+        <div class="step"><div class="n">3</div><h3>Click the match</h3>
+          <p>Click the tile matching the reference, or press its number key. It auto-advances.</p></div>
+        <div class="step"><div class="n">4</div><h3>Export</h3>
+          <p>Download a <code>.jsonl</code> with one row per labeled image.</p></div>
+      </div>
+
+      <div class="note">
+        <b>!</b>
+        <div><b>Supported layout:</b> candidates in a single top row of <i>n</i> equal square tiles
+        (indexed <code>0…n-1</code>, left to right), with the reference below them on the left.
+        Load <b>one variant at a time</b> — mixing types in one session produces inconsistent labels.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ viewer ============ -->
+  <section id="viewer" hidden>
+    <div id="stage">
+      <img id="img" alt="challenge">
+      <div id="overlay"><div id="refbox"><span>reference</span></div></div>
+    </div>
+
+    <div id="toolbar">
+      <button id="prev">← Prev</button>
+      <button id="skip">Skip</button>
+      <button id="next" class="btn-accent">Next →</button>
+      <button id="jump" class="btn-ghost">Next unlabeled</button>
+      <span id="picked" class="chip">no pick</span>
+      <label class="toggle"><input id="autoadv" type="checkbox" checked> auto-advance</label>
+      <label class="toggle"><input id="showref" type="checkbox" checked> show reference</label>
+      <span id="fname"></span>
+    </div>
+
+    <div id="help">
+      <span><kbd>1</kbd>–<kbd>9</kbd> pick tile</span>
+      <span><kbd>←</kbd><kbd>→</kbd> navigate</span>
+      <span><kbd>S</kbd> / <kbd>Space</kbd> skip</span>
+      <span><kbd>Backspace</kbd> clear</span>
+      <span>progress is saved in this browser</span>
+    </div>
+  </section>
+</main>
+
+<div id="toast"></div>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const LSKEY = "gridlabeler.v1";
+
+let files = [];        // {name, url}
+let idx = 0;
+let labels = {};       // id -> tile index
+let skipped = {};      // id -> true
+let NCAND = 8;
+
+/* ---------- persistence ---------- */
+function load(){
+  try{
+    const s = JSON.parse(localStorage.getItem(LSKEY) || "{}");
+    labels = s.labels || {}; skipped = s.skipped || {};
+    if(s.variant) $("variant").value = s.variant;
+    if(s.ncand)   $("ncand").value = s.ncand;
+  }catch(e){}
+}
+function persist(){
+  try{
+    localStorage.setItem(LSKEY, JSON.stringify({
+      labels, skipped, variant:$("variant").value, ncand:$("ncand").value
+    }));
+  }catch(e){}
+}
+load();
+NCAND = clampN($("ncand").value);
+
+function clampN(v){ v = parseInt(v,10); return (isNaN(v)||v<2||v>16) ? 8 : v; }
+function idOf(name){ return name.replace(/\.(png|jpe?g|webp)$/i, ""); }
+function toast(msg){
+  const t = $("toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(t._t); t._t = setTimeout(()=>t.classList.remove("show"), 1700);
+}
+
+/* ---------- loading files ---------- */
+function loadFiles(list){
+  const imgs = [...list].filter(f => /\.(png|jpe?g|webp)$/i.test(f.name));
+  if(!imgs.length){ toast("No image files found"); return; }
+  files = imgs.map(f => ({name:f.name, url:URL.createObjectURL(f)}))
+              .sort((a,b) => a.name.localeCompare(b.name));
+  idx = 0;
+  $("start").hidden = true; $("viewer").hidden = false; $("export").disabled = false;
+  $("tot").textContent = files.length;
+  show();
+  toast(`Loaded ${files.length} images`);
+}
+$("pickdir").onchange   = e => loadFiles(e.target.files);
+$("pickfiles").onchange = e => loadFiles(e.target.files);
+$("btnDir").onclick   = () => $("pickdir").click();
+$("btnFiles").onclick = () => $("pickfiles").click();
+$("drop").onclick     = () => $("pickdir").click();
+
+/* drag & drop (recurses into folders) */
+const drop = $("drop");
+["dragenter","dragover"].forEach(ev => document.addEventListener(ev, e => {
+  e.preventDefault(); drop.classList.add("hot");
+}));
+["dragleave","drop"].forEach(ev => document.addEventListener(ev, e => {
+  e.preventDefault(); drop.classList.remove("hot");
+}));
+document.addEventListener("drop", async e => {
+  const out = [];
+  async function walk(entry){
+    if(!entry) return;
+    if(entry.isFile){
+      await new Promise(r => entry.file(f => { if(/\.(png|jpe?g|webp)$/i.test(f.name)) out.push(f); r(); }));
+    }else if(entry.isDirectory){
+      const rd = entry.createReader();
+      await new Promise(r => rd.readEntries(async ents => { for(const en of ents) await walk(en); r(); }));
+    }
+  }
+  const items = [...(e.dataTransfer.items||[])]
+    .map(it => it.webkitGetAsEntry && it.webkitGetAsEntry()).filter(Boolean);
+  if(items.length){ for(const en of items) await walk(en); if(out.length) loadFiles(out); }
+  else if(e.dataTransfer.files.length) loadFiles(e.dataTransfer.files);
+});
+
+/* ---------- overlay ---------- */
+const img = $("img"), overlay = $("overlay"), refbox = $("refbox");
+let rowFrac = .5;
+
+function buildOverlay(){
+  overlay.querySelectorAll(".col").forEach(c => c.remove());
+  if(!files.length) return;
+  const W = img.naturalWidth, H = img.naturalHeight;
+  if(!W || !H) return;
+  const tile = W / NCAND;              // tiles are square: height == width
+  rowFrac = Math.min(tile / H, 1);
+  const id = idOf(files[idx].name);
+
+  for(let i = 0; i < NCAND; i++){
+    const c = document.createElement("div");
+    c.className = "col" + (labels[id] === i ? " picked" : "");
+    c.style.left   = (i * 100 / NCAND) + "%";
+    c.style.width  = (100 / NCAND) + "%";
+    c.style.height = (rowFrac * 100) + "%";
+    c.innerHTML = `<span class="num">${i}</span>`;
+    c.onclick = () => pick(i);
+    overlay.appendChild(c);
+  }
+  // reference guide: below the tile row, left side
+  if($("showref").checked && rowFrac < 1){
+    refbox.style.display = "block";
+    refbox.style.left   = "0%";
+    refbox.style.top    = (rowFrac * 100) + "%";
+    refbox.style.width  = Math.min(150 / NCAND, 100) + "%";
+    refbox.style.height = ((1 - rowFrac) * 100) + "%";
+  }else refbox.style.display = "none";
+}
+img.onload = buildOverlay;
+
+/* ---------- labeling ---------- */
+function pick(i){
+  if(i < 0 || i >= NCAND || !files.length) return;
+  const id = idOf(files[idx].name);
+  labels[id] = i; delete skipped[id];
+  persist(); buildOverlay(); refreshStats(); updatePicked();
+  if($("autoadv").checked) setTimeout(() => go(1), 160);
+}
+function show(){
+  if(!files.length) return;
+  const f = files[idx];
+  img.src = f.url;
+  $("cur").textContent = idx + 1;
+  $("fname").textContent = f.name;
+  updatePicked(); refreshStats(); buildOverlay();
+}
+function updatePicked(){
+  const id = idOf(files[idx].name);
+  const el = $("picked");
+  if(id in labels){ el.textContent = "tile " + labels[id]; el.className = "chip on"; }
+  else if(skipped[id]){ el.textContent = "skipped"; el.className = "chip"; }
+  else { el.textContent = "no pick"; el.className = "chip"; }
+}
+function go(d){
+  if(!files.length) return;
+  idx = Math.max(0, Math.min(files.length - 1, idx + d));
+  show();
+}
+function refreshStats(){
+  const ids = files.map(f => idOf(f.name));
+  const nl = ids.filter(i => i in labels).length;
+  const ns = ids.filter(i => i in skipped).length;
+  $("nlab").textContent = nl;
+  $("nskip").textContent = ns;
+  $("bar").firstElementChild.style.width = files.length ? ((nl + ns) / files.length * 100) + "%" : "0";
+}
+
+$("prev").onclick = () => go(-1);
+$("next").onclick = () => go(1);
+$("skip").onclick = () => {
+  if(!files.length) return;
+  const id = idOf(files[idx].name);
+  skipped[id] = true; delete labels[id];
+  persist(); refreshStats(); updatePicked(); go(1);
+};
+$("jump").onclick = () => {
+  const start = idx;
+  for(let k = 1; k <= files.length; k++){
+    const j = (start + k) % files.length;
+    const id = idOf(files[j].name);
+    if(!(id in labels) && !skipped[id]){ idx = j; show(); return; }
+  }
+  toast("Everything is labeled or skipped");
+};
+$("showref").onchange = buildOverlay;
+$("ncand").onchange = () => { NCAND = clampN($("ncand").value); $("ncand").value = NCAND; persist(); buildOverlay(); };
+$("variant").oninput = persist;
+
+$("reset").onclick = () => {
+  if(!confirm("Clear all saved labels and skips from this browser?")) return;
+  labels = {}; skipped = {};
+  try{ localStorage.removeItem(LSKEY); }catch(e){}
+  persist(); refreshStats();
+  if(files.length){ buildOverlay(); updatePicked(); }
+  toast("Progress cleared");
+};
+
+document.addEventListener("keydown", e => {
+  if($("viewer").hidden) return;
+  if(e.target.tagName === "INPUT") return;          // don't hijack the text fields
+  if(e.key >= "0" && e.key <= "9"){ pick(parseInt(e.key,10)); e.preventDefault(); }
+  else if(e.key === "ArrowRight") go(1);
+  else if(e.key === "ArrowLeft")  go(-1);
+  else if(e.key === "s" || e.key === "S" || e.key === " "){ e.preventDefault(); $("skip").click(); }
+  else if(e.key === "Backspace"){
+    const id = idOf(files[idx].name);
+    delete labels[id]; delete skipped[id];
+    persist(); buildOverlay(); refreshStats(); updatePicked();
+  }
+});
+
+/* ---------- export ---------- */
+$("export").onclick = () => {
+  const variant = $("variant").value.trim();
+  if(!variant){ toast("Set a variant name first"); $("variant").focus(); return; }
+  const inSet = new Set(files.map(f => idOf(f.name)));     // only the loaded folder
+  const rows = Object.entries(labels)
+    .filter(([id]) => inSet.has(id))
+    .map(([id, g]) => JSON.stringify({ id, variant, guess:g, n_cand:NCAND, source:"human" }));
+  if(!rows.length){ toast("No labels to export yet"); return; }
+  const blob = new Blob([rows.join("\n") + "\n"], {type:"application/x-ndjson"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `${variant}_labels.jsonl`;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  toast(`Exported ${rows.length} labels`);
+};
+
+refreshStats();
+</script>
+</body>
+</html>
