@@ -1,0 +1,11 @@
+### THE PoW GATE  (verified browserless on VPS, Sep-2026)
+
+    Flow: GET /pows/setup?session_token=X  -> pow_token + signed /powseq/<id>/target/<n>.js
+          POST /pows/started               -> 200 {}
+          POST /pows/split                 -> 400 "Invalid Request" (normal, browser gets this too)
+          POST /pows/check                 -> the verdict
+
+    /pows/check verdicts:
+        {"action":"pass"}       trusted, done, no image  (~18 reqs, ends /www/e.png?success=true)
+        {"action":"next",...}   another harder PoW round (escalating suspicion)
+        {"action":"challenge"}  image game (~50 reqs)
