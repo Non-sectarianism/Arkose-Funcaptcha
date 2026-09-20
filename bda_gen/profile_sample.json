@@ -1,0 +1,53 @@
+{
+  "_note": "Seeded from real bda_capture/camoufox_fp.json (Firefox 152 / Win / GTX 980). Fields marked NEEDS_REAL are the atomic hardware-bound values that must be captured from a real device (canvas/audio/webgl_params) or are per-browser-version constants captured once (wh_*). Everything else is generatable/soft.",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:152.0) Gecko/20100101 Firefox/152.0",
+  "platform": "Win32",
+  "vendor": "",
+  "language": "en-US",
+  "languages": ["en-US", "en"],
+  "hardwareConcurrency": 8,
+  "deviceMemory": null,
+  "pixelRatio": 1,
+  "dnt": "unknown",
+  "openDatabase": false,
+  "cpuClass": "unknown",
+  "touch": [0, false, false],
+  "battery_charging": true,
+  "history_length": 2,
+  "document_title": "",
+  "screen": { "w": 3072, "h": 1728, "aw": 3072, "ah": 1680, "cd": 24, "pd": 24 },
+  "tzOffset": 300,
+
+  "webgl": {
+    "vendor": "Mozilla",
+    "renderer": "Mozilla",
+    "version": "WebGL 1.0",
+    "shading": "WebGL GLSL ES 1.0",
+    "unmasked_vendor": "Google Inc. (NVIDIA)",
+    "unmasked_renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+    "extensions": "NEEDS_REAL:sorted;semicolon;joined;extension;list;from;FF152;on;this;GPU",
+    "params": {
+      "MAX_TEXTURE_SIZE": 16384,
+      "MAX_VIEWPORT_DIMS": "16384,16384",
+      "MAX_VERTEX_ATTRIBS": 16,
+      "MAX_VERTEX_UNIFORM_VECTORS": 4096,
+      "MAX_VARYING_VECTORS": 30,
+      "MAX_COMBINED_TEXTURE_IMAGE_UNITS": 32,
+      "MAX_CUBE_MAP_TEXTURE_SIZE": 16384,
+      "MAX_RENDERBUFFER_SIZE": 16384,
+      "ALIASED_LINE_WIDTH_RANGE": "1,1",
+      "ALIASED_POINT_SIZE_RANGE": "1,1024",
+      "MAX_TEXTURE_MAX_ANISOTROPY_EXT": 16,
+      "ALPHA_BITS": 8, "DEPTH_BITS": 24, "STENCIL_BITS": 8,
+      "RED_BITS": 8, "GREEN_BITS": 8, "BLUE_BITS": 8
+    }
+  },
+
+  "canvas_cfp": "NEEDS_REAL:canvas_fingerprint_hash_from_real_render",
+  "audio_fp": "NEEDS_REAL:124.0434577...float_from_real_OfflineAudioContext",
+  "js_fonts": "NEEDS_REAL:comma,joined,detected,font,list",
+  "plugins_fp": "NEEDS_REAL:plugins fingerprint string (FF152: usually empty/PDF viewer set)",
+
+  "wh_window_props": ["NEEDS_REAL_CAPTURE_ONCE_per_FF152", "window", "self", "document", "location", "navigator"],
+  "wh_proto_props": ["NEEDS_REAL_CAPTURE_ONCE_per_FF152", "constructor", "toString", "valueOf"]
+}
