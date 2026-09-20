@@ -1,0 +1,72 @@
+# enhanced_fp keys — VERBATIM, in source order, from api.js module 7333 C (deob 3687-4420).
+# Resolved via the module decoder (S/go, array w()). 61 keys total.
+# Legend: [soft]=derivable from profile  [cfg]=embedding config we set  [const]=fixed value
+#         [hw]=hardware-atomic (needs real capture)  [hash]=Arkose-hashed key name; value is a
+#         computed detector (inline fn) whose exact FORMAT needs capture or per-key value reverse.
+#
+00  user_agent_data_brands                 [soft] navigator.userAgentData.brands (FF: null)
+01  user_agent_data_mobile                 [soft] navigator.userAgentData.mobile (FF: null)
+02  navigator_connection_downlink          [soft] navigator.connection.downlink (FF: null)
+03  navigator_connection_downlink_max      [soft]
+04  network_info_rtt                        [soft] navigator.connection.rtt (FF: null)
+05  network_info_save_data                  [soft]
+06  network_info_rtt_type                   [soft]
+07  screen_pixel_depth                      [soft] screen.pixelDepth
+08  navigator_device_memory                 [soft] navigator.deviceMemory (FF: null)
+09  navigator_languages                     [soft] navigator.languages joined
+10  window_inner_width                      [soft] window.innerWidth
+11  window_inner_height                     [soft]
+12  window_outer_width                      [soft]
+13  window_outer_height                     [soft]
+14  browser_detection_firefox               [soft] bool
+15  browser_detection_brave                 [soft] bool (false)
+16  9f41a2c                                 [hash] computed detector (webgl/render-class?) — value fmt TBD
+17  5c273b3                                 [hash]
+18  ce4046e                                 [hash]
+19  f58835f                                 [hash]
+20  browser_object_checks                   [hash-ish] window/document object presence checks
+21  29s83ih9                                [hash]
+22  audio_codecs                            [soft] canPlayType matrix over E[] (fixed per browser ver)
+23  audio_codecs_extended_hash              [const/ver] x64hash128 of the audio codec results
+24  video_codecs                            [soft] canPlayType matrix (fixed per browser ver)
+25  video_codecs_extended_hash              [const/ver]
+26  media_query_dark_mode                   [soft] matchMedia prefers-color-scheme
+27  f9bf2db                                 [hash]
+28  headless_browser_phantom                [const] false (clean) — phantom globals absent
+29  headless_browser_selenium               [const] false (clean)
+30  headless_browser_nightmare_js           [const] false (clean)
+31  862f2c1                                 [hash]
+32  1l2l5234ar2                             [hash]
+33  document__referrer                      [cfg] document.referrer (=https://www.roblox.com/)
+34  window__ancestor_origins                [cfg] location.ancestorOrigins (=[https://www.roblox.com])
+35  window__tree_index                      [cfg] window tree index (=[0])
+36  window__tree_structure                  [cfg] (=[[],[],[],[[]],[]])
+37  window__location_href                   [cfg] the arkose iframe href
+38  client_config__sitedata_location_href   [cfg] parent site url
+39  client_config__language                 [cfg]
+40  client_config__surl                     [cfg] service url (roblox-api.arkoselabs.com)
+41  client_config__surl_hash                [cfg] x64hash128(surl)
+42  client_config__triggered_inline         [cfg]
+43  mobile_sdk__is_sdk                       [const] false (web, not SDK)
+44  z87b89t5                                [const] = 100302  (confirmed deob 14806)
+45  audio_fingerprint                       [hw]   OfflineAudioContext DSP float string (per platform)
+46  navigator_battery_charging              [soft] getBattery().charging
+47  7541c2s                                 [hash]
+48  1f220c9                                 [hash]
+49  math_fingerprint                        [const/platform] hash of Math fn outputs (per JS engine)
+50  supported_math_functions                [const] list of Math fns present (per engine)
+51  3f76dd27                                [hash]
+52  5dd48ca0                                [hash]
+53  4b4b269e68                              [cfg]  = enforcement/session id  (confirmed deob 12817)
+54  6a62b2a558                              [hash]
+55  isKeyless                                [cfg] false (Roblox uses a public key)
+56  waitForSettings                          [const]
+57  c2d2015                                 [hash]
+58  43f2d94                                 [hash]
+59  20c15922                                [hash]
+60  4f59ca8                                 [hash]
+#
+# STRUCTURAL NOTE: there are NO flat webgl_vendor/webgl_renderer top-level keys. WebGL + canvas are
+# folded into the hashed-name computed-detector keys (16-19, 27, 31-32, 47-48, 51-52, 54, 57-60).
+# The exact value FORMAT of each hashed key = an inline fn in C; fastest path to all of them is a
+# one-time real capture of en._s output (also yields real values + the per-version constants).
