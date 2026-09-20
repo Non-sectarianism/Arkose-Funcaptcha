@@ -1,0 +1,441 @@
+[
+  {
+    "key": "api_type",
+    "value": "js"
+  },
+  {
+    "key": "f",
+    "value": "27c04adbfec23f83573987d4d86a7946"
+  },
+  {
+    "key": "n",
+    "value": "MTc4ODkxMTQwMA=="
+  },
+  {
+    "key": "wh",
+    "value": "515b533ed821478388780a20bfe6c75d|7f9e09430c572f746818b273257f2d77"
+  },
+  {
+    "key": "enhanced_fp",
+    "value": [
+      {
+        "key": "webgl_extensions",
+        "value": "ANGLE_instanced_arrays;EXT_blend_minmax;EXT_clip_control;EXT_color_buffer_half_float;EXT_depth_clamp;EXT_disjoint_timer_query;EXT_float_blend;EXT_frag_depth;EXT_polygon_offset_clamp;EXT_shader_texture_lod;EXT_texture_compression_bptc;EXT_texture_compression_rgtc;EXT_texture_filter_anisotropic;EXT_texture_mirror_clamp_to_edge;EXT_sRGB;KHR_parallel_shader_compile;OES_element_index_uint;OES_fbo_render_mipmap;OES_standard_derivatives;OES_texture_float;OES_texture_float_linear;OES_texture_half_float;OES_texture_half_float_linear;OES_vertex_array_object;WEBGL_blend_func_extended;WEBGL_color_buffer_float;WEBGL_compressed_texture_s3tc;WEBGL_compressed_texture_s3tc_srgb;WEBGL_debug_renderer_info;WEBGL_debug_shaders;WEBGL_depth_texture;WEBGL_draw_buffers;WEBGL_lose_context;WEBGL_multi_draw;WEBGL_polygon_mode"
+      },
+      {
+        "key": "webgl_extensions_hash",
+        "value": "7300c23f4e6fa34e534fc99c1b628588"
+      },
+      {
+        "key": "webgl_renderer",
+        "value": "WebKit WebGL"
+      },
+      {
+        "key": "webgl_vendor",
+        "value": "WebKit"
+      },
+      {
+        "key": "webgl_version",
+        "value": "WebGL 1.0 (OpenGL ES 2.0 Chromium)"
+      },
+      {
+        "key": "webgl_shading_language_version",
+        "value": "WebGL GLSL ES 1.0 (OpenGL ES GLSL ES 1.0 Chromium)"
+      },
+      {
+        "key": "webgl_aliased_line_width_range",
+        "value": "[1, 1]"
+      },
+      {
+        "key": "webgl_aliased_point_size_range",
+        "value": "[1, 1024]"
+      },
+      {
+        "key": "webgl_antialiasing",
+        "value": "yes"
+      },
+      {
+        "key": "webgl_bits",
+        "value": "8,8,24,8,8,0"
+      },
+      {
+        "key": "webgl_max_params",
+        "value": "16,32,16384,1024,16384,16,16384,30,16,16,4096"
+      },
+      {
+        "key": "webgl_max_viewport_dims",
+        "value": "[32767, 32767]"
+      },
+      {
+        "key": "webgl_unmasked_vendor",
+        "value": "Google Inc. (Intel)"
+      },
+      {
+        "key": "webgl_unmasked_renderer",
+        "value": "ANGLE (Intel, Intel(R) UHD Graphics 600 (0x00003185) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      {
+        "key": "webgl_vsf_params",
+        "value": "23,127,127,23,127,127,23,127,127"
+      },
+      {
+        "key": "webgl_vsi_params",
+        "value": "0,31,30,0,31,30,0,31,30"
+      },
+      {
+        "key": "webgl_fsf_params",
+        "value": "23,127,127,23,127,127,23,127,127"
+      },
+      {
+        "key": "webgl_fsi_params",
+        "value": "0,31,30,0,31,30,0,31,30"
+      },
+      {
+        "key": "webgl_hash_webgl",
+        "value": "eed2104c4755ecfc0f0f560e4aa002bd"
+      },
+      {
+        "key": "user_agent_data_brands",
+        "value": "Chromium,Google Chrome,Not-A.Brand"
+      },
+      {
+        "key": "user_agent_data_mobile",
+        "value": false
+      },
+      {
+        "key": "navigator_connection_downlink",
+        "value": 10
+      },
+      {
+        "key": "navigator_connection_downlink_max",
+        "value": null
+      },
+      {
+        "key": "network_info_rtt",
+        "value": 50
+      },
+      {
+        "key": "network_info_save_data",
+        "value": false
+      },
+      {
+        "key": "network_info_rtt_type",
+        "value": "730eed"
+      },
+      {
+        "key": "screen_pixel_depth",
+        "value": 72
+      },
+      {
+        "key": "navigator_device_memory",
+        "value": 16
+      },
+      {
+        "key": "navigator_languages",
+        "value": "fr-FR,fr"
+      },
+      {
+        "key": "window_inner_width",
+        "value": 1174
+      },
+      {
+        "key": "window_inner_height",
+        "value": 855
+      },
+      {
+        "key": "window_outer_width",
+        "value": 1190
+      },
+      {
+        "key": "window_outer_height",
+        "value": 950
+      },
+      {
+        "key": "browser_detection_firefox",
+        "value": false
+      },
+      {
+        "key": "browser_detection_brave",
+        "value": false
+      },
+      {
+        "key": "9f41a2c",
+        "value": false
+      },
+      {
+        "key": "5c273b3",
+        "value": false
+      },
+      {
+        "key": "ce4046e",
+        "value": false
+      },
+      {
+        "key": "f58835f",
+        "value": "6681f2144d3d1ceb383fe87f7aad9600"
+      },
+      {
+        "key": "browser_object_checks",
+        "value": "554838a8451ac36cb977e719e9d6623c"
+      },
+      {
+        "key": "29s83ih9",
+        "value": "68934a3e9455fa72420237eb05902327⁣"
+      },
+      {
+        "key": "audio_codecs",
+        "value": "{\"ogg\":\"probably\",\"mp3\":\"probably\",\"wav\":\"probably\",\"m4a\":\"maybe\",\"aac\":\"probably\"}"
+      },
+      {
+        "key": "audio_codecs_extended_hash",
+        "value": "805036349642e2569ec299baed02315b"
+      },
+      {
+        "key": "video_codecs",
+        "value": "{\"ogg\":\"\",\"h264\":\"probably\",\"webm\":\"probably\",\"mpeg4v\":\"\",\"mpeg4a\":\"\",\"theora\":\"\"}"
+      },
+      {
+        "key": "video_codecs_extended_hash",
+        "value": "5648501a58d24ea22ce3773cc234e563"
+      },
+      {
+        "key": "media_query_dark_mode",
+        "value": false
+      },
+      {
+        "key": "f9bf2db",
+        "value": "{\"pc\":\"no-preference\",\"ah\":\"hover\",\"ap\":\"fine\",\"p\":\"fine\",\"h\":\"hover\",\"u\":\"fast\",\"prm\":\"no-preference\",\"prt\":\"no-preference\",\"s\":\"enabled\",\"fc\":\"none\"}"
+      },
+      {
+        "key": "headless_browser_phantom",
+        "value": false
+      },
+      {
+        "key": "headless_browser_selenium",
+        "value": false
+      },
+      {
+        "key": "headless_browser_nightmare_js",
+        "value": false
+      },
+      {
+        "key": "862f2c1",
+        "value": 4
+      },
+      {
+        "key": "1l2l5234ar2",
+        "value": "1788911400871⁣"
+      },
+      {
+        "key": "document__referrer",
+        "value": "https://www.roblox.com/"
+      },
+      {
+        "key": "window__ancestor_origins",
+        "value": [
+          "https://www.roblox.com"
+        ]
+      },
+      {
+        "key": "window__tree_index",
+        "value": [
+          0
+        ]
+      },
+      {
+        "key": "window__tree_structure",
+        "value": "[[],[],[],[[]],[]]"
+      },
+      {
+        "key": "window__location_href",
+        "value": ""
+      },
+      {
+        "key": "client_config__sitedata_location_href",
+        "value": ""
+      },
+      {
+        "key": "client_config__language",
+        "value": "en-us"
+      },
+      {
+        "key": "client_config__surl",
+        "value": "https://arkoselabs.roblox.com"
+      },
+      {
+        "key": "c8480e29a",
+        "value": "82e587de59c07c4a379a6cc646c0e644⁢"
+      },
+      {
+        "key": "client_config__triggered_inline",
+        "value": false
+      },
+      {
+        "key": "mobile_sdk__is_sdk",
+        "value": false
+      },
+      {
+        "key": "z87b89t5",
+        "value": null
+      },
+      {
+        "key": "audio_fingerprint",
+        "value": "124.04347527516074"
+      },
+      {
+        "key": "navigator_battery_charging",
+        "value": true
+      },
+      {
+        "key": "7541c2s",
+        "value": "4a937fac0181bb7d4d7aafdafb0916ed"
+      },
+      {
+        "key": "1f220c9",
+        "value": "739a4a2f70439cb2827efd5e528d8253"
+      },
+      {
+        "key": "math_fingerprint",
+        "value": "e00752d866abf7fdf93bd4111bcfeb7b"
+      },
+      {
+        "key": "supported_math_functions",
+        "value": "3f7aaba900fde542f258166cd2b71ef5"
+      },
+      {
+        "key": "3f76dd27",
+        "value": "landscape-primary"
+      },
+      {
+        "key": "5dd48ca0",
+        "value": 5
+      },
+      {
+        "key": "4b4b269e68",
+        "value": "c1da4fb1-6802-4786-ab3f-b6bcc5c156d8"
+      },
+      {
+        "key": "6a62b2a558",
+        "value": "2d1c8a89671586563cb793ae2399b954"
+      },
+      {
+        "key": "is_keyless",
+        "value": false
+      },
+      {
+        "key": "client_config__wait_for_settings",
+        "value": false
+      },
+      {
+        "key": "c2d2015",
+        "value": "d31f9d30189b5da11faacbcdb9077f29"
+      },
+      {
+        "key": "43f2d94",
+        "value": []
+      },
+      {
+        "key": "20c15922",
+        "value": true
+      },
+      {
+        "key": "4f59ca8",
+        "value": null
+      },
+      {
+        "key": "3ea7194",
+        "value": {
+          "supported": true,
+          "formats": [
+            "HDR10",
+            "HLG"
+          ],
+          "isHDR": false
+        }
+      },
+      {
+        "key": "05d3d24",
+        "value": "8c57cf8df50b2f957f3ab2eb52ba9c01"
+      },
+      {
+        "key": "speech_default_voice",
+        "value": "Microsoft Hortense - French (France) || fr-FR"
+      },
+      {
+        "key": "speech_voices_hash",
+        "value": "db17fdfa8987376aafc7af0f9b5583dd"
+      },
+      {
+        "key": "83eb055",
+        "value": "a7c6d6b0c449bd83ad550bb9255756ae"
+      },
+      {
+        "key": "4ca87df3d1",
+        "value": "Ow=="
+      },
+      {
+        "key": "867e25e5d4",
+        "value": "Ow=="
+      },
+      {
+        "key": "d4a306884c",
+        "value": "Ow=="
+      },
+      {
+        "key": "vsadsa",
+        "value": 9
+      },
+      {
+        "key": "basfas",
+        "value": [
+          0,
+          4395630592
+        ]
+      },
+      {
+        "key": "lfasdgs",
+        "value": "bbaf081e26919bb3ac5123baa30c5f79"
+      }
+    ]
+  },
+  {
+    "key": "fe",
+    "value": [
+      "DNT:unknown",
+      "L:fr-FR",
+      "D:24",
+      "PR:1",
+      "S:1920,1080",
+      "AS:1920,1080",
+      "TO:-60",
+      "SS:true",
+      "LS:true",
+      "IDB:true",
+      "B:false",
+      "ODB:false",
+      "CPUC:unknown",
+      "PK:Win32",
+      "CFP:-889495390",
+      "FR:false",
+      "FOS:false",
+      "FB:false",
+      "JSF:Arial,Arial Black,Arial Narrow,Calibri,Cambria,Cambria Math,Comic Sans MS,Consolas,Courier,Courier New,Georgia,Helvetica,Impact,Lucida Console,Lucida Sans Unicode,Microsoft Sans Serif,MS Gothic,MS PGothic,MS Sans Serif,MS Serif,Palatino Linotype,Segoe Print,Segoe Script,Segoe UI,Segoe UI Light,Segoe UI Semibold,Segoe UI Symbol,Tahoma,Times,Times New Roman,Trebuchet MS,Verdana,Wingdings",
+      "P:Chrome PDF Viewer,Chromium PDF Viewer,Microsoft Edge PDF Viewer,PDF Viewer,WebKit built-in PDF",
+      "T:0,false,false",
+      "H:8",
+      "SWF:false"
+    ]
+  },
+  {
+    "key": "ife_hash",
+    "value": "70a9de0a1999b1ca96c6483184b9efaf"
+  },
+  {
+    "key": "jsbd",
+    "value": "{\"HL\":2,\"NCE\":true,\"DT\":\"\",\"NWD\":\"false\",\"DMTO\":1,\"DOTO\":1}"
+  },
+  {
+    "key": "c",
+    "value": "Copyright (c) 2026 Arkose Labs. All Rights Reserved."
+  }
+]
